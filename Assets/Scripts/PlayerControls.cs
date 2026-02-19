@@ -38,6 +38,6 @@ public class PlayerControls : MonoBehaviour
     {
         rb.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
 
-        Debug.Log("Jumped");
+        //Debug.Log("Jumped");
     }
 }

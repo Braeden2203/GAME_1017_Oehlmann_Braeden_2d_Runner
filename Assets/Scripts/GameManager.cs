@@ -14,22 +14,26 @@ public class GameManager : MonoBehaviour
     public GameObject Ground;
     public GameObject Spike;
 
-    Vector2 PlayerSpawnPoint = new Vector3(-3, -3);
-    Vector2 GroundSpawnPoint = new Vector2(0, -4);
-    Vector2 SpikeSpawnPoint = new Vector2(-3, 0);
     
 
+    Vector2 PlayerSpawnPoint = new Vector2(-3, -3);
+    
+    
+
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
+
         StartButton.gameObject.SetActive(true);
         StartButton.onClick.AddListener(StartGame);
 
-
+        
         //Player.SetActive(false);
-       // Ground.SetActive(false);
+        Ground.SetActive(false);
         Spike.SetActive(false);
 
         ReplayButton.gameObject.SetActive(false);
@@ -48,35 +52,45 @@ public class GameManager : MonoBehaviour
 
    
 
-    private void StartGame()
+    public void StartGame()
     {
         StartButton.gameObject.SetActive(false);
 
-        Instantiate(Ground, GroundSpawnPoint, Quaternion.identity);
+        
+
+        
         Instantiate(Player, PlayerSpawnPoint, Quaternion.identity);
         
         
-        //Player.SetActive(true);
-        //Ground.SetActive(true);
+        Ground.SetActive(true);
         Spike.SetActive(true);
 
-       // Player.gameObject.transform.Translate(-3, -2.8f, 0);
-       // Ground.gameObject.transform.Translate(0, 0, 0);
-       // Spike.gameObject.transform.Translate(0, 0, 0);
+        GameOverText.gameObject.SetActive(false);
+        MenuButton.gameObject.SetActive(false);
+        ReplayButton.gameObject.SetActive(false);
+
     }
+
+
 
     private void OnMenuClick()
     {
+        Ground.SetActive(false);
+        Spike.SetActive(false);
 
+        GameOverText.gameObject.SetActive(false);
+        MenuButton.gameObject.SetActive(false);
+        ReplayButton.gameObject.SetActive(false);
+
+        StartButton.gameObject.SetActive(true);
     }
 
     public void Die()
     {
-        Debug.Log("B");
-        
-        Destroy(Ground);
-        Destroy(Player);
-       
+        //Debug.Log("B");
+
+
+        Ground.SetActive(false);
         Spike.SetActive(false);
 
         GameOverText.gameObject.SetActive(true);

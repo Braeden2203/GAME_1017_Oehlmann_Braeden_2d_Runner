@@ -21,7 +21,8 @@ public class EnemyDamage : MonoBehaviour
     public void OnTriggerEnter2D(Collider2D collision)
     {
         GameManager.Die();
-        Debug.Log("A");
+        Destroy(collision.gameObject);
+        //Debug.Log("A");
     }
 
 }
