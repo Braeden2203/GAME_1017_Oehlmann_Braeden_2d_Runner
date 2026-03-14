@@ -10,8 +10,9 @@ public class PlayerControls : MonoBehaviour
 
     public InputActionReference jump;
 
+    float MovementSpeed = 5f;
 
-
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,7 +22,8 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        float MoveX = MovementSpeed * Time.deltaTime;
+        transform.Translate(MoveX, 0, 0);
     }
 
     private void OnEnable()

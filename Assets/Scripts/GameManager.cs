@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,43 +11,47 @@ public class GameManager : MonoBehaviour
     [SerializeField] Button MenuButton;
     [SerializeField] TMP_Text GameOverText;
 
+    
+
     public GameObject Player;
     public GameObject Ground;
     public GameObject Spike;
 
+    public float GameTimer = 0;
+    [SerializeField] TMP_Text GameTimerText;
     
 
     Vector2 PlayerSpawnPoint = new Vector2(-3, -3);
-    
-    
+    Vector2 GroundSpawnPointStart = new Vector2(0, -4);
 
-    
+    public bool GamePlay = false;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        DontDestroyOnLoad(this);
 
         StartButton.gameObject.SetActive(true);
         StartButton.onClick.AddListener(StartGame);
-
-        
-        //Player.SetActive(false);
-        Ground.SetActive(false);
-        Spike.SetActive(false);
 
         ReplayButton.gameObject.SetActive(false);
         ReplayButton.onClick.AddListener(StartGame);
         MenuButton.gameObject.SetActive(false);
         MenuButton.onClick.AddListener(OnMenuClick);
         GameOverText.gameObject.SetActive(false);
-
+        GameTimerText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (GamePlay != false)
+        {
+            GameTimer += Time.deltaTime;
+            int GameTimerRounded = Mathf.RoundToInt(GameTimer);
+            GameTimerText.text = GameTimerRounded.ToString();
+        }
         
     }
 
@@ -54,17 +59,15 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
+        
+        SceneManager.LoadScene(1);
+
+        GameTimer = 0;
+        GameTimerText.gameObject.SetActive(true);
+        GamePlay = true;
+        
+        
         StartButton.gameObject.SetActive(false);
-
-        
-
-        
-        Instantiate(Player, PlayerSpawnPoint, Quaternion.identity);
-        
-        
-        Ground.SetActive(true);
-        Spike.SetActive(true);
-
         GameOverText.gameObject.SetActive(false);
         MenuButton.gameObject.SetActive(false);
         ReplayButton.gameObject.SetActive(false);
@@ -75,23 +78,22 @@ public class GameManager : MonoBehaviour
 
     private void OnMenuClick()
     {
-        Ground.SetActive(false);
-        Spike.SetActive(false);
+        SceneManager.LoadScene(0);
+        
 
         GameOverText.gameObject.SetActive(false);
         MenuButton.gameObject.SetActive(false);
         ReplayButton.gameObject.SetActive(false);
-
+        GameTimerText.gameObject.SetActive(false);
         StartButton.gameObject.SetActive(true);
     }
 
     public void Die()
     {
-        //Debug.Log("B");
-
-
-        Ground.SetActive(false);
-        Spike.SetActive(false);
+        
+        SceneManager.LoadScene(2);
+        GamePlay = false;
+        
 
         GameOverText.gameObject.SetActive(true);
         MenuButton.gameObject.SetActive(true);
